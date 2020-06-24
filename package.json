@@ -1,0 +1,39 @@
+{
+  "name": "pixijs-typescript-template",
+  "version": "0.0.1",
+  "description": "pixi.js typescript template",
+  "scripts": {
+    "test": "npx jest",
+    "code-coverage": "jest --coverage",
+    "dev": "parcel ./src/index.html --port=8080 --open ",
+    "prebuild": "npx del-cli ./dist",
+    "build": "parcel build ./src/index.html"
+  },
+  "author": "bySabi Files",
+  "license": "MIT",
+  "dependencies": {
+    "pixi.js": "^5.3.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^26.0.0",
+    "@types/jsdom": "^16.2.3",
+    "del-cli": "^3.0.1",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^25.5.4",
+    "jest-canvas-mock": "^2.2.0",
+    "jsdom": "^16.2.2",
+    "parcel-bundler": "^1.12.4",
+    "parcel-plugin-static-files-copy": "^2.4.3",
+    "ts-jest": "^26.1.1",
+    "typescript": "^3.9.5"
+  },
+  "staticFiles": {
+    "staticPath": [
+      {
+        "staticPath": "./src/assets",
+        "staticOutDir": "./assets"
+      }
+    ],
+    "watcherGlob": "**"
+  }
+}
