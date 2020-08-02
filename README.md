@@ -32,7 +32,7 @@ For vscode users - ctrl ( or ⌘ ) + shift + b will run the watch build as its s
 
 ### Inspired in the work of
 
-- Yordan Kanchelov <> [@jkanchelove](https://github.com/jkanchelov) **in** [pixi-typescript-boilerplate](https://github.com/jkanchelov/pixi-typescript-boilerplate/)
+- Yordan Kanchelov <> [@jkanchelov](https://github.com/jkanchelov) **in** [pixi-typescript-boilerplate](https://github.com/jkanchelov/pixi-typescript-boilerplate/)
 
 ## Contributing
 
