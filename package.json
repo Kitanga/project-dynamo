@@ -1,20 +1,28 @@
 {
-  "name": "pixijs-typescript-template",
-  "version": "0.0.1",
+  "name": "project-dynamo",
+  "version": "0.1.0",
   "description": "pixi.js typescript template",
   "scripts": {
     "test": "npx jest",
     "code-coverage": "jest --coverage",
-    "dev": "parcel ./src/index.html --port=8080 --open ",
+    "dev": "parcel ./src/index.html --port=8080",
+    "dev:open": "parcel ./src/index.html --port=8080 --open",
     "prebuild": "npx del-cli ./dist",
     "build": "parcel build ./src/index.html"
   },
   "author": "bySabi Files",
   "license": "MIT",
   "dependencies": {
+    "@pixi/sound": "^4.0.4",
+    "alea": "^1.0.0",
+    "howler": "^2.2.3",
+    "intersects": "^2.7.2",
+    "keycon": "^1.1.2",
     "pixi.js": "^5.3.0"
   },
   "devDependencies": {
+    "@timohausmann/quadtree-js": "^1.2.4",
+    "@types/intersects": "^2.5.0",
     "@types/jest": "^26.0.0",
     "@types/jsdom": "^16.2.3",
     "del-cli": "^3.0.1",
@@ -25,7 +33,7 @@
     "parcel-bundler": "^1.12.4",
     "parcel-plugin-static-files-copy": "^2.4.3",
     "ts-jest": "^26.1.1",
-    "typescript": "^3.9.5"
+    "typescript": "^4.2.4"
   },
   "staticFiles": {
     "staticPath": [

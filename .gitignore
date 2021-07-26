@@ -36,3 +36,4 @@ attic
 *.old*
 *.orig*
 *.off*
+_unprocessed_files

@@ -1,0 +1,39 @@
+{"frames": {
+
+"player_plane_1.png":
+{
+	"frame": {"x":1,"y":1,"w":59,"h":48},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":11,"w":59,"h":48},
+	"sourceSize": {"w":70,"h":70}
+},
+"player_plane_2.png":
+{
+	"frame": {"x":62,"y":1,"w":59,"h":48},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":11,"w":59,"h":48},
+	"sourceSize": {"w":70,"h":70}
+},
+"player_plane_3.png":
+{
+	"frame": {"x":123,"y":1,"w":59,"h":48},
+	"rotated": false,
+	"trimmed": true,
+	"spriteSourceSize": {"x":5,"y":11,"w":59,"h":48},
+	"sourceSize": {"w":70,"h":70}
+}},
+"animations": {
+	"player_plane": ["player_plane_1.png","player_plane_2.png","player_plane_3.png"]
+},
+"meta": {
+	"app": "https://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "player_plane-atlas.png",
+	"format": "RGBA8888",
+	"size": {"w":183,"h":50},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:54292e616305df2c684b0c9c500287a9:9d3ae1a75122f8c0f175c9bdf0db8302:9a0c5d8e24e3626621781424fac7b4ef$"
+}
+}
