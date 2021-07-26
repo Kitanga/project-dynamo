@@ -138,14 +138,25 @@ function showGame(): void {
 	/** Anything that the player can collide with (i.e. enemy planes, bullets, etc.) */
 	const dangerToPlayer = new Topple();
 	dangerToPlayer.registerRetrievalPoints(player);
-	dangerToPlayer.addToPool([...spawner.fighterPool.pool, ...spawner.shootingFightersPool.pool, ...spawner.fourShotBomberPool.pool, ...spawner.bulletPool.pool]);
+	dangerToPlayer.addToPool([
+		...spawner.fighterPool.pool,
+		...spawner.shootingFightersPool.pool,
+		...spawner.fourShotBomberPool.pool,
+		...spawner.bulletPool.pool,
+		...spawner.eightShotBomberPool.pool,
+	]);
 
 	/** Anything that the player can shoot (i.e. enemy planes) */
 	const playerShoots = new Topple();
 	player.bulletPool.pool.forEach(entity => {
 		playerShoots.registerRetrievalPoints(entity);
 	});
-	playerShoots.addToPool([...spawner.fighterPool.pool, ...spawner.shootingFightersPool.pool, ...spawner.fourShotBomberPool.pool]);
+	playerShoots.addToPool([
+		...spawner.fighterPool.pool, 
+		...spawner.shootingFightersPool.pool, 
+		...spawner.fourShotBomberPool.pool,
+		...spawner.eightShotBomberPool.pool,
+	]);
 
 	const UI = UIController.getInstance();
 
@@ -222,7 +233,7 @@ function showGameOver(score: number): void {
 	app.stage.addChild(scoreTitle);
 
 	// Place Play Again Button
-	const playAgainButton =  new Text('Play Again', new TextStyle({...baseStyle, fontSize: 52 }));
+	const playAgainButton = new Text('Play Again', new TextStyle({ ...baseStyle, fontSize: 52 }));
 
 	playAgainButton.interactive = true;
 	playAgainButton.buttonMode = true;

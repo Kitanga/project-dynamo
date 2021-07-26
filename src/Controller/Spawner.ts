@@ -208,6 +208,7 @@ export class Spawner {
 
 		this.applyBulletPoolTo<ObjectPoolHandler<Plane, any[]>>(this.shootingFightersPool);
 		this.applyBulletPoolTo<ObjectPoolHandler<Plane, any[]>>(this.fourShotBomberPool);
+		this.applyBulletPoolTo<ObjectPoolHandler<Plane, any[]>>(this.eightShotBomberPool);
 		this.init();
 	}
 
@@ -323,7 +324,7 @@ export class Spawner {
 		const halfWidth = basePlane.width * 0.5;
 		const halfHeight = basePlane.height * 0.5;
 		const xOffset = random(halfWidth, GAME_WIDTH - (halfWidth * formation[0].length));
-		const yOffset = halfHeight * formation.length;
+		const yOffset = halfHeight * formation.length + 1;
 
 		for (let y = 0, length = formation.length; y < length; y++) {
 			const row = formation[y];
@@ -386,6 +387,7 @@ export class Spawner {
 		this.fighterPool.update(dt);
 		this.shootingFightersPool.update(dt);
 		this.fourShotBomberPool.update(dt);
+		this.eightShotBomberPool.update(dt);
 		// this.carrierPool.update(dt);
 		// this.battleshipPool.update(dt);
 		this.bulletPool.update(dt);

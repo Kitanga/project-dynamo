@@ -35,7 +35,7 @@ export class Plane extends Bullet {
 		const hh = h * 0.5;
 
 		// Changed the top border check so that there's more space for a plane to spawn when in a formation
-		if (x + hw < 0 || x - hw > GAME_WIDTH || y - hh > GAME_HEIGHT + hh || y + hh < -(hh * 3)) {
+		if (x + hw < 0 || x - hw > GAME_WIDTH || y - hh > GAME_HEIGHT + hh || y + hh < -(hh * 8)) {
 			this.active = this.visible = false;
 		}
 	}
