@@ -7,10 +7,10 @@ import Quadtree from '@timohausmann/quadtree-js';
 
 export enum PrimaryControls {
 	SHOOT = 'n',
-	LEFT = 'w',
-	RIGHT = 's',
-	UP = 'a',
-	DOWN = 'd',
+	LEFT = 'a',
+	RIGHT = 'd',
+	UP = 'w',
+	DOWN = 's',
 }
 
 export enum alternateControls {
