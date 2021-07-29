@@ -56,7 +56,7 @@ export class Plane extends Bullet {
 			case QuadEntityType.PLAYER_BULLET:
 				const collisionX = Math.abs(this.x - gameObject.x);
 
-				if (collisionX < 8) {
+				if (collisionX < 5) {
 					this.damage(this.PLAYER_BULLET_DAMAGE * this.CRITICAL_HIT_MULTIPLIER, this.BASE_HP);
 				} else {
 					this.damage(this.PLAYER_BULLET_DAMAGE, this.BASE_HP);
