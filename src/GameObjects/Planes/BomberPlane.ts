@@ -8,7 +8,7 @@ import { Vector2D } from '../../Math/Vector2D';
 import { Bullet } from '../ObjectPoolHandler';
 import { ArmedPlane } from './ArmedPlane';
 
-export type BomberPlaneProps = [];
+export type BomberPlaneProps = [Texture?];
 
 export class BomberPlane extends ArmedPlane {
 	protected bulletSpeed = 2.9;
@@ -26,8 +26,8 @@ export class BomberPlane extends ArmedPlane {
 
 	protected PLAYER_BULLET_DAMAGE: number = 1;
 
-	constructor() {
-		super(Texture.from('aircraft_3e.png'));
+	constructor(texture: Texture) {
+		super(texture);
 
 		this.scale.set(1, -1);
 		this.TIME_BETWEEN_SHOTS = 2000;
@@ -36,6 +36,7 @@ export class BomberPlane extends ArmedPlane {
 		this.BASE_HP = 9;
 		this.hp = this.BASE_HP;
 		this.canShoot = true;
+		this.CRITICAL_HIT_MULTIPLIER = 2;
 	}
 
 	protected spawnBullets(): Bullet[] {
@@ -99,5 +100,11 @@ export class BomberPlane extends ArmedPlane {
 		}
 
 		return bullets;
+	}
+
+	public damage(damage: number, pointsOnDeath: number): void {
+		super.damage(damage, pointsOnDeath);
+
+		console.log('Damage being done:', damage);
 	}
 };

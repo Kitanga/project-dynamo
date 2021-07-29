@@ -48,7 +48,6 @@ function convertGraphicToTexture(graphic: Graphics): Texture {
 	return app.renderer.generateTexture(graphic, SCALE_MODES.NEAREST, app.renderer.resolution);
 }
 
-// TODO: create a function that returns the correct graphics object. Create a bunch of functions that create graphics (move preloader and player bullet here)
 let textures: Map<Graphic_List, Texture> = new Map();
 export enum Graphic_List {
 	PRELOADER,

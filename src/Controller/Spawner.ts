@@ -1,7 +1,7 @@
 import { Texture } from 'pixi.js';
 import { GAME_WIDTH } from '../constants';
 import { Bullet, BulletProps, EnemyBullet, EnemyBulletProps, ObjectPoolEntity, ObjectPoolHandler } from '../GameObjects/ObjectPoolHandler';
-import { BomberPlane, BomberPlaneProps, EightShotBomberPlane, Plane, ShooterFighterPlane, ShooterFighterPlaneProps } from '../GameObjects/Planes';
+import { BomberPlane, BomberPlaneProps, EightShotBomberPlane, FourShotBomberPlane, Plane, ShooterFighterPlane, ShooterFighterPlaneProps } from '../GameObjects/Planes';
 import { NormalPlane, NormalPlaneProps } from '../GameObjects/Planes/NormalPlane';
 import { getGraphicTexture, Graphic_List, random } from '../Utils';
 
@@ -24,7 +24,7 @@ export class Spawner {
 	public readonly bulletPool = new ObjectPoolHandler<EnemyBullet, EnemyBulletProps>(200, EnemyBullet);
 	public readonly fighterPool = new ObjectPoolHandler<NormalPlane, NormalPlaneProps>(30, NormalPlane);
 	public readonly shootingFightersPool = new ObjectPoolHandler<ShooterFighterPlane, ShooterFighterPlaneProps>(30, ShooterFighterPlane);
-	public readonly fourShotBomberPool = new ObjectPoolHandler<BomberPlane, BomberPlaneProps>(40, BomberPlane);
+	public readonly fourShotBomberPool = new ObjectPoolHandler<FourShotBomberPlane, BomberPlaneProps>(40, FourShotBomberPlane);
 	public readonly eightShotBomberPool = new ObjectPoolHandler<EightShotBomberPlane, BomberPlaneProps>(40, EightShotBomberPlane);
 	// public readonly battleshipPool = new ObjectPoolHandler<NormalPlane, any[]>(3, NormalPlane);
 	// public readonly carrierPool = new ObjectPoolHandler<NormalPlane, any[]>(3, NormalPlane);

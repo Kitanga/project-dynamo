@@ -3,12 +3,14 @@
  */
 
 import { Texture } from 'pixi.js';
-import { QuadEntityType } from '../../constants';
-import { Vector2D } from '../../Math/Vector2D';
 import { Bullet } from '../ObjectPoolHandler';
 import { BomberPlane } from './BomberPlane';
 
 export class EightShotBomberPlane extends BomberPlane {
+	constructor() {
+		super(Texture.from('aircraft_3e.png'));
+	}
+
 	protected spawnBullets(): Bullet[] {
 		const bullets: Bullet[] = [];
 		const bulletSpeed = this.bulletSpeed;
@@ -17,7 +19,6 @@ export class EightShotBomberPlane extends BomberPlane {
 			for (let y = -1; y < 2; y++) {
 				// Not the central block
 				if (!(x == 0 && y == 0)) {
-					console.log(x, y);
 					const bullet = this.bulletPool.get();
 
 					if (bullet) {

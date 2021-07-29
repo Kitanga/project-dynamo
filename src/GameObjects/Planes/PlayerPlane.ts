@@ -5,7 +5,26 @@ import { GAME_HEIGHT, GAME_WIDTH, QuadEntityType } from '../../constants';
 import { Bullet, ObjectPoolEntity, ObjectPoolHandler, PlayerBullet, PlayerBulletProps } from '../ObjectPoolHandler';
 import Quadtree from '@timohausmann/quadtree-js';
 
+export enum PrimaryControls {
+	SHOOT = 'n',
+	LEFT = 'w',
+	RIGHT = 's',
+	UP = 'a',
+	DOWN = 'd',
+}
+
+export enum alternateControls {
+	SHOOT = 'space',
+	LEFT = 'left',
+	RIGHT = 'right',
+	UP = 'up',
+	DOWN = 'down',
+}
+
+
+
 export class PlayerPlane extends Bullet {
+	[key: string]: any;
 	protected kb: KeyController;
 
 	protected velocity = new Vector2D();
@@ -37,12 +56,10 @@ export class PlayerPlane extends Bullet {
 	protected readonly FRAME_BEFORE_ALT = 3;
 	protected fireRight = true;
 	protected frameCount: number;
+	protected controlMapping: [(PrimaryControls | alternateControls), string][];
 
 	constructor() {
 		super(Texture.from('player_plane_1.png'));
-
-		this.kb = new KeyController();
-		this.initEvents();
 
 		this.TIME_BETWEEN_SHOTS = 1000 / this.RPS;
 		this.frameCount = this.FRAME_BEFORE_ALT;
@@ -52,6 +69,62 @@ export class PlayerPlane extends Bullet {
 
 		this._collisionBound.width = this.collisionBoundOffsets.width;
 		this._collisionBound.height = this.collisionBoundOffsets.height;
+
+		this.controlMapping = [
+			[PrimaryControls.SHOOT, 'Shoot'],
+			[PrimaryControls.UP, 'Up'],
+			[PrimaryControls.DOWN, 'Down'],
+			[PrimaryControls.LEFT, 'Left'],
+			[PrimaryControls.RIGHT, 'Right'],
+			[alternateControls.SHOOT, 'Shoot'],
+			[alternateControls.UP, 'Up'],
+			[alternateControls.DOWN, 'Down'],
+			[alternateControls.LEFT, 'Left'],
+			[alternateControls.RIGHT, 'Right'],
+		];
+
+		this.kb = new KeyController();
+		this.initEvents();
+	}
+
+	activateShoot(): void {
+		this.controls.shoot = true;
+	}
+
+	activateUp(): void {
+		this.controls.up = true;
+	}
+
+	activateDown(): void {
+		this.controls.down = true;
+	}
+
+	activateLeft(): void {
+		this.controls.left = true;
+	}
+
+	activateRight(): void {
+		this.controls.right = true;
+	}
+
+	deactivateShoot(): void {
+		this.controls.shoot = false;
+	}
+
+	deactivateUp(): void {
+		this.controls.up = false;
+	}
+
+	deactivateDown(): void {
+		this.controls.down = false;
+	}
+
+	deactivateLeft(): void {
+		this.controls.left = false;
+	}
+
+	deactivateRight(): void {
+		this.controls.right = false;
 	}
 
 	/**
@@ -69,55 +142,53 @@ export class PlayerPlane extends Bullet {
 			controls.right = false;
 		});
 
-		// Move up
-		kb.keydown('n', () => {
-			controls.shoot = true;
+		this.controlMapping.forEach(controlMap => {
+			const keyboardKey = controlMap[0];
+			const action = controlMap[1];
+
+			kb.keydown(keyboardKey, this['activate' + action].bind(this));
+			kb.keyup(keyboardKey, this['deactivate' + action].bind(this));
 		});
 
 		// Move up
-		kb.keydown('w', () => {
-			controls.up = true;
-		});
+		// kb.keydown();
+
+		// Move up
+		// kb.keydown();
 
 		// Move down
-		kb.keydown('s', () => {
-			controls.down = true;
-		});
+		// kb.keydown();
 
 		// Move left
-		kb.keydown('a', () => {
-			controls.left = true;
-		});
+		// kb.keydown();
 
 		// Move right
-		kb.keydown('d', () => {
-			controls.right = true;
-		});
+		// kb.keydown();
 
 		// Stop shooting
-		kb.keyup('n', () => {
-			controls.shoot = false;
-		});
+		// kb.keyup('n', () => {
+		// 	controls.shoot = false;
+		// });
 
 		// Stop moving up
-		kb.keyup('w', () => {
-			controls.up = false;
-		});
+		// kb.keyup('w', () => {
+		// 	controls.up = false;
+		// });
 
 		// Stop moving down
-		kb.keyup('s', () => {
-			controls.down = false;
-		});
+		// kb.keyup('s', () => {
+		// 	controls.down = false;
+		// });
 
 		// Stop moving left
-		kb.keyup('a', () => {
-			controls.left = false;
-		});
+		// kb.keyup('a', () => {
+		// 	controls.left = false;
+		// });
 
 		// Stop moving right
-		kb.keyup('d', () => {
-			controls.right = false;
-		});
+		// kb.keyup('d', () => {
+		// 	controls.right = false;
+		// });
 
 		// When we destroy the 
 		this.on('destroyed', this.stopKeyboardListening, this);
@@ -217,7 +288,7 @@ export class PlayerPlane extends Bullet {
 	public collision(gameObject: ObjectPoolEntity): void {
 		this.emit('game-over');
 	}
-	
+
 	// protected _collisionBoundOffsets: Quadtree.Rect = {
 	// 	x: 31,
 	// 	y: 22,
@@ -230,21 +301,21 @@ export class PlayerPlane extends Bullet {
 		width: 7,
 		height: 16,
 	};
-	
+
 	protected _collisionBound: Quadtree.Rect = {
 		x: 0,
 		y: 0,
 		width: 0,
 		height: 0,
 	};
-	
+
 	get collisionBounds(): Quadtree.Rect {
 		const position = this.position;
 		const _collisionBound = this._collisionBound;
-		
+
 		_collisionBound.x = position.x;
 		_collisionBound.y = position.y;
-		
+
 		return _collisionBound;
 	}
 }

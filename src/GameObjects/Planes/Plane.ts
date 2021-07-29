@@ -16,6 +16,7 @@ export class Plane extends Bullet {
 	protected BASE_HP = 1;
 	protected hp = 1;
 	protected PLAYER_BULLET_DAMAGE: number = 1;
+	protected CRITICAL_HIT_MULTIPLIER: number;
 
 	constructor(texture: Texture) {
 		super(texture);
@@ -24,6 +25,7 @@ export class Plane extends Bullet {
 
 		this.setVelocity(0, 2);
 		this.hp = this.BASE_HP;
+		this.CRITICAL_HIT_MULTIPLIER = 1;
 	}
 
 	public despawn(): void {
@@ -52,7 +54,13 @@ export class Plane extends Bullet {
 	public collision(gameObject: ObjectPoolEntity): void {
 		switch (gameObject.entityType) {
 			case QuadEntityType.PLAYER_BULLET:
-				this.damage(this.PLAYER_BULLET_DAMAGE, this.BASE_HP);
+				const collisionX = Math.abs(this.x - gameObject.x);
+
+				if (collisionX < 8) {
+					this.damage(this.PLAYER_BULLET_DAMAGE * this.CRITICAL_HIT_MULTIPLIER, this.BASE_HP);
+				} else {
+					this.damage(this.PLAYER_BULLET_DAMAGE, this.BASE_HP);
+				}
 				break;
 			case QuadEntityType.PLAYER:
 				this.damage(1, 0);
