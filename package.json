@@ -1,6 +1,6 @@
 {
   "name": "project-dynamo",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "pixi.js typescript template",
   "scripts": {
     "test": "npx jest",
@@ -8,7 +8,7 @@
     "dev": "parcel ./src/index.html --port=8080",
     "dev:open": "parcel ./src/index.html --port=8080 --open",
     "prebuild": "npx del-cli ./dist",
-    "build": "parcel build ./src/index.html"
+    "build": "parcel build ./src/index.html --public-url ./dist/"
   },
   "author": "bySabi Files",
   "license": "MIT",
