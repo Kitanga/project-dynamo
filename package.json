@@ -5,8 +5,8 @@
   "scripts": {
     "test": "npx jest",
     "code-coverage": "jest --coverage",
-    "dev": "parcel ./src/index.html --port=8080",
-    "dev:open": "parcel ./src/index.html --port=8080 --open",
+    "dev": "parcel ./src/index.html --port=8080 --out-dir ./dev-build/",
+    "dev:open": "parcel ./src/index.html --port=8080 --open --out-dir ./dev-build/",
     "prebuild": "npx del-cli ./dist",
     "build": "parcel build ./src/index.html"
   },
