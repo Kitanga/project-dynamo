@@ -7,7 +7,7 @@
     "code-coverage": "jest --coverage",
     "dev": "parcel ./src/index.html --port=8080 --out-dir ./dev-build/",
     "dev:open": "parcel ./src/index.html --port=8080 --open --out-dir ./dev-build/",
-    "prebuild": "npx del-cli ./dist",
+    "start": "npm run build",
     "build": "parcel build ./src/index.html"
   },
   "author": "bySabi Files",
