@@ -1,7 +1,7 @@
 {
   "name": "project-dynamo",
   "version": "0.5.1",
-  "description": "pixi.js typescript template",
+  "description": "Shmup game",
   "scripts": {
     "test": "npx jest",
     "code-coverage": "jest --coverage",
@@ -10,8 +10,7 @@
     "start": "npm run build",
     "build": "parcel build ./src/index.html"
   },
-  "author": "bySabi Files",
-  "license": "MIT",
+  "author": "Kitanga Nday",
   "dependencies": {
     "@pixi/sound": "^4.0.4",
     "alea": "^1.0.0",
