@@ -15,6 +15,7 @@
   "dependencies": {
     "@pixi/sound": "^4.0.4",
     "alea": "^1.0.0",
+    "express": "^4.17.1",
     "howler": "^2.2.3",
     "intersects": "^2.7.2",
     "joypad.js": "^2.2.5",
