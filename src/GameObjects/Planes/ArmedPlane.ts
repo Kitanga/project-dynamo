@@ -28,7 +28,7 @@ export class ArmedPlane extends Plane {
 	protected shoot(): void {
 		const now = performance.now();
 
-		if (now > this.lastShot + this.TIME_BETWEEN_SHOTS) {
+		if (now > this.lastShot + this.TIME_BETWEEN_SHOTS && this.y > this.height * 0.5) {
 			this.lastShot = now;
 
 			this.spawnBullets();

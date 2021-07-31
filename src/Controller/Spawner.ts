@@ -362,29 +362,6 @@ export class Spawner {
 		return planes;
 	}
 
-	// protected updateSpawnQueue(): void {
-	// 	// const spawnQueue = this.spawnQueue;
-	// 	const spawnOrder = this.spawnOrder.reverse();
-	// 	spawnOrder.reverse();
-
-	// 	const now = performance.now();
-	// 	const gameStarted = this.gameStarted;
-
-	// 	for (let ix = 0, length = spawnOrder.length; ix < length; ix--) {
-	// 		const order = spawnOrder[ix];
-
-	// 		if (order && order[0] > now - gameStarted) {
-	// 			console.log('Comparison:', order[0], now - gameStarted);
-	// 			order[2]();
-	// 			// window.setInterval(order[2], order[1]);
-	// 			// order[0] = Date.now();
-	// 			break;
-	// 		}
-	// 	}
-
-	// 	spawnOrder.reverse();
-	// }
-
 	update(dt: number): void {
 		this.fighterPool.update(dt);
 		this.shootingFightersPool.update(dt);

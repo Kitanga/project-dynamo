@@ -21,9 +21,10 @@ Dynamo is an endless top-down shmup, with the goal of getting the highest score.
 	* [v0.4.0 (menu)](#v0.4.0menu)
 	* [v0.5.0 (game over screen)](#v0.5.0gameoverscreen)
 	* [v0.5.1 (feedback from andrew + other stuff)](#v0.5.1feedbackfromandrewotherstuff)
-	* [v0.5.3 (Loading Screen fix up)](#v0.5.3LoadingScreenfixup)
-	* [v0.6.0 (new plane: Meandering plane)](#v0.6.0newplane:Meanderingplane)
-	* [v0.6.0 (audio)](#v0.6.0audio)
+	* [v0.6.0 (game feel and pacing fixes)](#v0.6.0gamefeelandpacingfixes)
+	* [v0.7.0 (Loading Screen fix up)](#v0.7.0LoadingScreenfixup)
+	* [v0.8.0 (new plane: Meandering plane)](#v0.8.0newplane:Meanderingplane)
+	* [v0.7.0 (audio)](#v0.7.0audio)
 	* [v0.x.0 (polishing)](#v0.x.0polishing)
 
 <!-- vscode-markdown-toc-config
@@ -178,11 +179,13 @@ Dynamo is an endless top-down shmup, with the goal of getting the highest score.
 - [x] 4 point bomber should have different smaller sprite
 - [x] Easier way to kill bombers.
 
-### v0.6.0 (game feel and pacing fixes)
+### <a name='v0.6.0gamefeelandpacingfixes'></a>v0.6.0 (game feel and pacing fixes)
 - [x] Implement Gamepad
 - [x] Implement gamepad vibration when shooting and hitting things
 - [x] Planes that spawn should have their value moved closer to the player's position (use lerp function, pass it the )
-- [ ] When a plane spawns it should only shoot when it's on the screen
+- [x] When a plane spawns it should only shoot when it's on the screen
+- [ ] Update: Wave 1 planes should move faster
+    - [ ] This will be a wave 1 alternate, so pick between the 2, the standard version should have a higher likelihood of spawning.
 - [ ] Screen shake when shooting
 - [ ] Game
     - [ ] Shoot
@@ -191,10 +194,8 @@ Dynamo is an endless top-down shmup, with the goal of getting the highest score.
     - [ ] Enemy explode
     - [ ] Player lost life
 
-### <a name='v0.5.3LoadingScreenfixup'></a>v0.7.0 (Loading Screen fix up)
+### <a name='v0.7.0LoadingScreenfixup'></a>v0.7.0 (Loading Screen fix up)
 
-- [ ] Update: Wave 1 planes should move faster
-    - [ ] This will be a wave 1 alternate, so pick between the 2, the standard version should have a higher likelihood of spawning.
 - [ ] Update: add system for multiple critical areas
 - [ ] Update: Press shoot button to move to next screen (loading -> menu, menu -> play, game-over -> play)
 - [ ] Fix?: Apparently enemies can't shoot from outside the game's border.
@@ -204,11 +205,11 @@ Dynamo is an endless top-down shmup, with the goal of getting the highest score.
     - [ ] WASD or Arrow keys to move player (put this on the left side)
     - [ ] N or Spacebar to fire (put this on the right side)
 
-### <a name='v0.6.0newplane:Meanderingplane'></a>v0.8.0 (new plane: Meandering plane)
+### <a name='v0.8.0newplane:Meanderingplane'></a>v0.8.0 (new plane: Meandering plane)
 
 - [ ] New: Plane that meanders
 
-### <a name='v0.6.0audio'></a>v0.7.0 (audio)
+### <a name='v0.7.0audio'></a>v0.9.0 (audio)
 
 - [ ] Main Menu
     - [ ] Button hover
