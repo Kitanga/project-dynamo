@@ -18,7 +18,7 @@ A top-down shoot em' up (shmup) built with PixiJS.
 
 ## <a name='Demo'></a>Demo
 
-Play it here: https://kitanga.github.io/project-dynamo/dist/
+Play it [here](https://dynamo-shmup.herokuapp.com/)
 
 ## <a name='Designspec'></a>Design spec
 
