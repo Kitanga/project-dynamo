@@ -22,9 +22,10 @@ Dynamo is an endless top-down shmup, with the goal of getting the highest score.
 	* [v0.5.0 (game over screen)](#v0.5.0gameoverscreen)
 	* [v0.5.1 (feedback from andrew + other stuff)](#v0.5.1feedbackfromandrewotherstuff)
 	* [v0.6.0 (game feel and pacing fixes)](#v0.6.0gamefeelandpacingfixes)
-	* [v0.7.0 (Loading Screen fix up)](#v0.7.0LoadingScreenfixup)
-	* [v0.8.0 (new plane: Meandering plane)](#v0.8.0newplane:Meanderingplane)
-	* [v0.7.0 (audio)](#v0.7.0audio)
+	* [v0.7.0 Place highscore on a server](#v0.7.0Placehighscoreonaserver)
+	* [v0.8.0 (Loading Screen fix up)](#v0.8.0LoadingScreenfixup)
+	* [v0.9.0 (new plane: Meandering plane)](#v0.9.0newplane:Meanderingplane)
+	* [v0.10.0 (audio)](#v0.10.0audio)
 	* [v0.x.0 (polishing)](#v0.x.0polishing)
 
 <!-- vscode-markdown-toc-config
@@ -194,7 +195,13 @@ Dynamo is an endless top-down shmup, with the goal of getting the highest score.
     - [ ] Enemy explode
     - [ ] Player lost life
 
-### <a name='v0.7.0LoadingScreenfixup'></a>v0.7.0 (Loading Screen fix up)
+### <a name='v0.7.0Placehighscoreonaserver'></a>v0.7.0 Place highscore on a server
+
+- [ ] Create `server.js` file for serving game on node server.
+- [ ] Launch game onto heroku.
+- [ ] Place highscore on a server
+
+### <a name='v0.8.0LoadingScreenfixup'></a>v0.8.0 (Loading Screen fix up)
 
 - [ ] Update: add system for multiple critical areas
 - [ ] Update: Press shoot button to move to next screen (loading -> menu, menu -> play, game-over -> play)
@@ -205,11 +212,11 @@ Dynamo is an endless top-down shmup, with the goal of getting the highest score.
     - [ ] WASD or Arrow keys to move player (put this on the left side)
     - [ ] N or Spacebar to fire (put this on the right side)
 
-### <a name='v0.8.0newplane:Meanderingplane'></a>v0.8.0 (new plane: Meandering plane)
+### <a name='v0.9.0newplane:Meanderingplane'></a>v0.9.0 (new plane: Meandering plane)
 
 - [ ] New: Plane that meanders
 
-### <a name='v0.7.0audio'></a>v0.9.0 (audio)
+### <a name='v0.10.0audio'></a>v0.10.0 (audio)
 
 - [ ] Main Menu
     - [ ] Button hover

@@ -7,7 +7,7 @@
     "code-coverage": "jest --coverage",
     "dev": "parcel ./src/index.html --port=8080 --out-dir ./dev-build/",
     "dev:open": "parcel ./src/index.html --port=8080 --open --out-dir ./dev-build/",
-    "start": "npm run build",
+    "start": "node server.js",
     "build": "parcel build ./src/index.html"
   },
   "author": "Kitanga Nday",
