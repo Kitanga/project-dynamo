@@ -4,6 +4,7 @@ import { Vector2D } from '../../Math';
 import { GAME_HEIGHT, GAME_WIDTH, QuadEntityType } from '../../constants';
 import { Bullet, ObjectPoolEntity, ObjectPoolHandler, PlayerBullet, PlayerBulletProps } from '../ObjectPoolHandler';
 import Quadtree from '@timohausmann/quadtree-js';
+import { GamepadButtons, GamepadController } from '../../Controller';
 
 export enum PrimaryControls {
 	SHOOT = 'n',
@@ -21,11 +22,17 @@ export enum alternateControls {
 	DOWN = 'down',
 }
 
-
+export enum GamepadControls {
+	SHOOT = 'space',
+	LEFT = 'left',
+	RIGHT = 'right',
+	UP = 'up',
+	DOWN = 'down',
+}
 
 export class PlayerPlane extends Bullet {
-	[key: string]: any;
 	protected kb: KeyController;
+	protected gc: GamepadController;
 
 	protected velocity = new Vector2D();
 
@@ -82,6 +89,14 @@ export class PlayerPlane extends Bullet {
 			[alternateControls.LEFT, 'Left'],
 			[alternateControls.RIGHT, 'Right'],
 		];
+
+		this.gc = new GamepadController(this, [
+			[GamepadButtons.RIGHT_BOTTOM_SHOULDER, 'Shoot'],
+			[GamepadButtons.DPAD_UP, 'Up'],
+			[GamepadButtons.DPAD_DOWN, 'Down'],
+			[GamepadButtons.DPAD_LEFT, 'Left'],
+			[GamepadButtons.DPAD_RIGHT, 'Right'],
+		]);
 
 		this.kb = new KeyController();
 		this.initEvents();
@@ -146,49 +161,11 @@ export class PlayerPlane extends Bullet {
 			const keyboardKey = controlMap[0];
 			const action = controlMap[1];
 
+			//@ts-ignore
 			kb.keydown(keyboardKey, this['activate' + action].bind(this));
+			//@ts-ignore
 			kb.keyup(keyboardKey, this['deactivate' + action].bind(this));
 		});
-
-		// Move up
-		// kb.keydown();
-
-		// Move up
-		// kb.keydown();
-
-		// Move down
-		// kb.keydown();
-
-		// Move left
-		// kb.keydown();
-
-		// Move right
-		// kb.keydown();
-
-		// Stop shooting
-		// kb.keyup('n', () => {
-		// 	controls.shoot = false;
-		// });
-
-		// Stop moving up
-		// kb.keyup('w', () => {
-		// 	controls.up = false;
-		// });
-
-		// Stop moving down
-		// kb.keyup('s', () => {
-		// 	controls.down = false;
-		// });
-
-		// Stop moving left
-		// kb.keyup('a', () => {
-		// 	controls.left = false;
-		// });
-
-		// Stop moving right
-		// kb.keyup('d', () => {
-		// 	controls.right = false;
-		// });
 
 		// When we destroy the 
 		this.on('destroyed', this.stopKeyboardListening, this);
@@ -237,6 +214,12 @@ export class PlayerPlane extends Bullet {
 				}
 
 				bullet.position.set(x, y);
+				this.gc.vibrate({
+					startDelay: 0,
+					duration: 50,
+					weakMagnitude: 0.8,
+					strongMagnitude: 0.7
+				  })
 			}
 		}
 	}
@@ -252,13 +235,15 @@ export class PlayerPlane extends Bullet {
 		this.velocity.y = y;
 	}
 
-	public update(deltaTime: number): void {
+	public update(dt: number): void {
+		this.gc.update(dt);
+
 		if (!--this.frameCount) {
 			this.fireRight = !this.fireRight;
 			this.frameCount = this.FRAME_BEFORE_ALT;
 		}
 
-		this.bulletPool.update(deltaTime);
+		this.bulletPool.update(dt);
 		const { x: velX, y: velY } = this.velocity;
 		this.updateMovement();
 
@@ -268,8 +253,8 @@ export class PlayerPlane extends Bullet {
 
 		const halfWidth = (this.width * 0.5);
 
-		const newX = this.x + (velX * deltaTime);
-		const newY = this.y + (velY * deltaTime);
+		const newX = this.x + (velX * dt);
+		const newY = this.y + (velY * dt);
 
 		const leftBound = newX - halfWidth;
 		const rightBound = newX + halfWidth;

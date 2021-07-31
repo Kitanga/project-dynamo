@@ -1,9 +1,9 @@
 import { Texture } from 'pixi.js';
 import { GAME_WIDTH } from '../constants';
 import { Bullet, BulletProps, EnemyBullet, EnemyBulletProps, ObjectPoolEntity, ObjectPoolHandler } from '../GameObjects/ObjectPoolHandler';
-import { BomberPlane, BomberPlaneProps, EightShotBomberPlane, FourShotBomberPlane, Plane, ShooterFighterPlane, ShooterFighterPlaneProps } from '../GameObjects/Planes';
+import { BomberPlane, BomberPlaneProps, EightShotBomberPlane, FourShotBomberPlane, Plane, PlayerPlane, ShooterFighterPlane, ShooterFighterPlaneProps } from '../GameObjects/Planes';
 import { NormalPlane, NormalPlaneProps } from '../GameObjects/Planes/NormalPlane';
-import { getGraphicTexture, Graphic_List, random } from '../Utils';
+import { getGraphicTexture, Graphic_List, lerp, random } from '../Utils';
 
 enum ENEMY_TYPE {
 	FIGHTER = 1,
@@ -18,7 +18,7 @@ const b = ENEMY_TYPE.FOUR_SHOT_BOMBERS;
 const B = ENEMY_TYPE.EIGHT_SHOT_BOMBERS;
 
 export class Spawner {
-	
+
 	protected gameStarted: number;
 
 	public readonly bulletPool = new ObjectPoolHandler<EnemyBullet, EnemyBulletProps>(200, EnemyBullet);
@@ -203,7 +203,7 @@ export class Spawner {
 		[16000, 3000, this.spawnMixedFormation.bind(this)],
 	];
 
-	constructor() {
+	constructor(protected player: PlayerPlane) {
 		this.gameStarted = performance.now();
 
 		this.applyBulletPoolTo<ObjectPoolHandler<Plane, any[]>>(this.shootingFightersPool);
@@ -238,11 +238,7 @@ export class Spawner {
 		const fighter = this.fighterPool.get();
 
 		if (fighter) {
-			fighter.y = -fighter.height * 0.5;
-			const halfW = fighter.width * 0.5;
-			fighter.x = random(halfW, GAME_WIDTH - halfW);
-
-			return fighter;
+			return this.spawnSingleUnit(fighter);
 		}
 	}
 
@@ -250,12 +246,18 @@ export class Spawner {
 		const fighter = this.shootingFightersPool.get();
 
 		if (fighter) {
-			fighter.y = -fighter.height * 0.5;
-			const halfW = fighter.width * 0.5;
-			fighter.x = random(halfW, GAME_WIDTH - halfW);
-
-			return fighter;
+			return this.spawnSingleUnit(fighter);
 		}
+	}
+
+	protected spawnSingleUnit(plane: Plane): Plane {
+		plane.y = -plane.height * 0.5;
+		const halfW = plane.width * 0.5;
+		plane.x = random(halfW, GAME_WIDTH - halfW);
+
+		plane.x = lerp(plane.x, this.player.x, random(0, 1));
+
+		return plane;
 	}
 
 	protected spawnMixedFormation(): Plane[] | undefined {
@@ -392,7 +394,7 @@ export class Spawner {
 		// this.battleshipPool.update(dt);
 		this.bulletPool.update(dt);
 	}
-	
+
 	public gameOver(): void {
 		this.timedActions.forEach(id => {
 			window.clearInterval(id);

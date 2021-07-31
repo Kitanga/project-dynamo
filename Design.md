@@ -21,7 +21,8 @@ Dynamo is an endless top-down shmup, with the goal of getting the highest score.
 	* [v0.4.0 (menu)](#v0.4.0menu)
 	* [v0.5.0 (game over screen)](#v0.5.0gameoverscreen)
 	* [v0.5.1 (feedback from andrew + other stuff)](#v0.5.1feedbackfromandrewotherstuff)
-	* [v0.5.2 (Loading Screen fix up)](#v0.5.2LoadingScreenfixup)
+	* [v0.5.3 (Loading Screen fix up)](#v0.5.3LoadingScreenfixup)
+	* [v0.6.0 (new plane: Meandering plane)](#v0.6.0newplane:Meanderingplane)
 	* [v0.6.0 (audio)](#v0.6.0audio)
 	* [v0.x.0 (polishing)](#v0.x.0polishing)
 
@@ -62,6 +63,16 @@ Dynamo is an endless top-down shmup, with the goal of getting the highest score.
     - [ ] ~~Wave three, fighters that move to make sure they are in front of you as they shoot. (x5 needed. Comparing with wave 1 fighters)~~
         - [ ] ~~A cool trick would be to put them in a formation as bomber escort~~
     - [ ] ~~Wave four, bombers show up. They can't hit you from far but can be tricky at close range (bombers take x9 fighter damage)~~
+- [ ] Damage types:
+    - [x] Normal damage is how much damage a plane takes from one player shoot
+    - [x] Critical damage occurs when the Critical damage multiplier is greater than 1. Critical damage multiplier is a number multiplied by the plane's damage to get the new damage.
+        - [ ] This can happen when a plane is hit on a critical area (cockpit, engines). Smoke can come out of these areas.
+- [ ] Enemy types:
+    - [x] normal plane: it's a fighter plane but for some unknown reason it just doesn't shoot at you. It's also lightly armored (defense: 1; Critical: 1; Critical_areas: 0)
+    - [ ] fighter plane: this plane shoots downwards as it moves (defense: 3; Critical: 1; Critical_areas: 0)
+    - [ ] 4 shot bomber plane: this plane shoots in 4 directions (defense: 9; Critical: 2; Critical_areas: 3)
+    - [ ] 8 shot bomber plane: this plane shoots in 8 directions (defense: 9; Critical: 2; Critical_areas: 3)
+    - [ ] meandering planes: this plane shoots whilst meandering (defense: 6; Critical: 1.5; Critical_areas: 3)
 - [ ] Getting hit takes out one of your 9 lives.
 - [ ] Hitting an enemy can cause fumes to come out
 - [ ] Also, destroying an enemy plane has the chance of dropping a parachuted pilot.
@@ -97,8 +108,8 @@ Dynamo is an endless top-down shmup, with the goal of getting the highest score.
 
 ### <a name='Movement'></a>Movement
 
-- [ ] Player can move up, down, left, and right
-- [ ] Use `WASD` for movement.
+- [x] Player can move up, down, left, and right
+- [x] Use `WASD` for movement.
 - [ ] As time passes you lose fuel. The lower your fuel is the less you can move forward and backwards. But with lower levels comes nimbleness and thus you'll be able to fly left and right with greater speed (this will in turn make it easier to catch any dropping fuel)
 
 ### <a name='Shooting'></a>Shooting
@@ -109,17 +120,19 @@ Dynamo is an endless top-down shmup, with the goal of getting the highest score.
 - [ ] When a hit enemy's health drops below 50% then it switches to being in a damaged state.
     - [ ] Smoke should start coming out.
     - [ ] Whenever the health drops below 40%/30%/20%/10% a new smoke blume is created where the crippling bullet hit (this could look messy)
+- [ ] I like my controller/keyboard with all the buttons intact and working for as long as is possible. 1 issue with this genre is people hold the shoot button the whole time. What I'm going to do instead is add a meter that fills up as your gun fires 
 
 ### <a name='Playerhitbox'></a>Player hit box
 
-- [ ] The player's hit box will be smaller than the other planes whole have full body (normal) hit boxes. The player will only have a hit box around it's cockpit.
-- [ ] This should give the player more breathing room.
+- [x] The player's hit box will be smaller than the other planes who have full body (normal) hit boxes. The player will only have a hit box around it's cockpit.
+- [x] This should give the player more breathing room.
 
 ### <a name='Playerstats'></a>Player stats
 
-- [ ] Hitpoints: you have 1
+- [x] Hitpoints: you have 1
 - [ ] Lives: you have 9 (This is to show the player that this will not be easy)
 - [ ] Fuel: Starts out at 100 drops as time goes by.
+- [ ] Overheat meter: starts at 0, maxes out at 100%. Increases the longer you hold the trigger. amountIncrease < amountDecrease.
 
 ## <a name='Techstack'></a>Tech stack
 
@@ -165,30 +178,45 @@ Dynamo is an endless top-down shmup, with the goal of getting the highest score.
 - [x] 4 point bomber should have different smaller sprite
 - [x] Easier way to kill bombers.
 
-### <a name='v0.5.2LoadingScreenfixup'></a>v0.5.2 (Loading Screen fix up)
+### v0.6.0 (game feel and pacing fixes)
+- [x] Implement Gamepad
+- [x] Implement gamepad vibration when shooting and hitting things
+- [x] Planes that spawn should have their value moved closer to the player's position (use lerp function, pass it the )
+- [ ] When a plane spawns it should only shoot when it's on the screen
+- [ ] Screen shake when shooting
+- [ ] Game
+    - [ ] Shoot
+    - [ ] Hit enemy
+    - [ ] Enemy shoot
+    - [ ] Enemy explode
+    - [ ] Player lost life
 
-- [ ] shoot to move to next screen (loading -> menu, menu -> play, game-over -> play)
-- [ ] Move click prompt to loading screen
+### <a name='v0.5.3LoadingScreenfixup'></a>v0.7.0 (Loading Screen fix up)
+
+- [ ] Update: Wave 1 planes should move faster
+    - [ ] This will be a wave 1 alternate, so pick between the 2, the standard version should have a higher likelihood of spawning.
+- [ ] Update: add system for multiple critical areas
+- [ ] Update: Press shoot button to move to next screen (loading -> menu, menu -> play, game-over -> play)
+- [ ] Fix?: Apparently enemies can't shoot from outside the game's border.
+- [ ] Update: Move click prompt to loading screen
     - [ ] Loading text and loader should disappear and "Press an key" text should show centre of the screen
-- [ ] Add instructions on how to play
+- [ ] New: Add instructions on how to play
     - [ ] WASD or Arrow keys to move player (put this on the left side)
     - [ ] N or Spacebar to fire (put this on the right side)
 
+### <a name='v0.6.0newplane:Meanderingplane'></a>v0.8.0 (new plane: Meandering plane)
 
-### <a name='v0.6.0audio'></a>v0.6.0 (audio)
+- [ ] New: Plane that meanders
+
+### <a name='v0.6.0audio'></a>v0.7.0 (audio)
 
 - [ ] Main Menu
     - [ ] Button hover
     - [ ] Button press
 - [ ] Game
-    - [ ] Move
-    - [ ] Shoot
-    - [ ] Hit enemy
-    - [ ] Enemy shoot
-    - [ ] Enemy explode
+    - [ ] Move -->
     - [ ] *Enemy Swoop in
     - [ ] *Pick up other player's dog tag
-    - [ ] Player lost life
     - [ ] Player lost life because tag not picked
 
 ### <a name='v0.x.0polishing'></a>v0.x.0 (polishing)
@@ -204,3 +232,7 @@ Dynamo is an endless top-down shmup, with the goal of getting the highest score.
 - [ ] Fuel speed change
 - [ ] Parachuting enemies
 - [ ] Add a second player in a sort of co-op mode
+- [ ] Add settings
+    - [ ] Audio control
+    - [ ] controller deadzone, mapping, vibration toggle, etc.
+    - [ ] Screen shake toggle

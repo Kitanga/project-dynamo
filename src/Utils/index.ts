@@ -138,7 +138,7 @@ export function getGraphicTexture(index: Graphic_List): Texture {
 	return textures.get(index) as Texture;
 }
 
-export function random(min: number, max: number): number {
+export function random(min = 0, max = 1): number {
 	return (min + (Math.random() * (max - min)));
 }
 

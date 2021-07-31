@@ -132,7 +132,7 @@ function showGame(): void {
 	stage.addChild(player);
 
 	// Create spawner system
-	const spawner = new Spawner();
+	const spawner = new Spawner(player);
 
 	// Collision system setup
 	/** Anything that the player can collide with (i.e. enemy planes, bullets, etc.) */
