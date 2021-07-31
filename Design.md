@@ -185,8 +185,8 @@ Dynamo is an endless top-down shmup, with the goal of getting the highest score.
 - [x] Implement gamepad vibration when shooting and hitting things
 - [x] Planes that spawn should have their value moved closer to the player's position (use lerp function, pass it the )
 - [x] When a plane spawns it should only shoot when it's on the screen
-- [ ] Create `server.js` file for serving game on node server.
-- [ ] Launch game onto heroku.
+- [x] Create `server.js` file for serving game on node server.
+- [x] Launch game onto heroku.
 - [ ] Update: Wave 1 planes should move faster
     - [ ] This will be a wave 1 alternate, so pick between the 2, the standard version should have a higher likelihood of spawning.
 - [ ] Screen shake when shooting
