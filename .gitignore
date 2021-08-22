@@ -3,3 +3,5 @@ coverage
 dist/*
 .cache
 .env
+
+_unprocessed_files

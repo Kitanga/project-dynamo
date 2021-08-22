@@ -1,32 +1,56 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/14e7ef42-5c90-44c8-a7ec-0b6e20c59735/deploy-status)](https://pixi-typescript-boilerplate.netlify.com) ![Windows build](https://github.com/jkanchelov/pixi-typescript-boilerplate/workflows/Windows%20build/badge.svg?branch=master) ![Linux build](https://github.com/jkanchelov/pixi-typescript-boilerplate/workflows/Linux%20build/badge.svg) ![MacOs build](https://github.com/jkanchelov/pixi-typescript-boilerplate/workflows/MacOs%20build/badge.svg)
+# Project Dynamo
 
-# pixi-typescript-boilerplate
+A top-down shoot em' up (shmup) built with PixiJS.
 
-## Beginner friendly template for pixi.js with [Webpack](https://webpack.js.org/)
+<!-- vscode-markdown-toc -->
+* [Demo](#Demo)
+* [Design spec](#Designspec)
+* [Controls](#Controls)
+* [Change log](#Changelog)
+	* [v0.5.1](#v0.5.1)
+	* [v0.5.0](#v0.5.0)
 
-## Highlights
+<!-- vscode-markdown-toc-config
+	numbering=false
+	autoSave=true
+	/vscode-markdown-toc-config -->
+<!-- /vscode-markdown-toc -->
 
--   🔰 - Beginner friendly.
--   🛠 - Typescript + Babel.
--   ✈️ - Live reload.
--   🚀 - Blazing fast bundle times
--   📝 - Consistent code style using Prettier and Eslint
--   📝 - Unit test support with [Jest](https://jestjs.io/), generating code coverage.
+## <a name='Demo'></a>Demo
 
-## Usage
+Play it [here](https://dynamo-shmup.herokuapp.com/)
 
-### Click on the green button "Use this template" on top of the repo or <br> <br> Simply copy paste this and start coding
+## <a name='Designspec'></a>Design spec
 
-`git clone --depth=1 --branch=master https://github.com/yordan-kanchelov/pixi-typescript-boilerplate`
+[Design.md](./Design.md)
 
-`rm -r -force ./pixi-typescript-boilerplate/.git`
+## <a name='Controls'></a>Controls
 
-## Commands:
+- `WASD`/`Arrow Keys` for movement
+- `n`/`Spacebar` for shooting
 
--   `npm run build` - starts build procedure
--   `npm run start` - start watching for files and open's server on localhost:8080
--   `npm run test` - run tests
--   `npm run code-coverage` - generate code coverage report
--   `npm run code-style-check` - run's eslint and prettier check on your code
+## <a name='Changelog'></a>Change log
 
-For vscode users - ctrl ( or ⌘ ) + shift + b will run the watch build as its set as default vscode task
+### <a name='v0.5.1'></a>v0.5.1
+
+First patch version for 0.5. Doesn't really have bug fixes, more like feedback implementations. Changed how controls are set for a player, new system is way better and should make switching to two player so much easier. Aiming for the cockpit of a bomber does double the damage now.
+
+- [x] Implement arrows+spacebar control combo into game.
+- [x] 4 point bomber should have different smaller sprite
+- [x] Easier way to kill bombers (aim for the cockpit/nose).
+
+### <a name='v0.5.0'></a>v0.5.0
+
+This was the first version that got uploaded to GitHub.
+
+- [x] Added Loading page
+- [x] Player plane movement and shooting
+- [x] A scrolling background
+- [x] Basic enemy spawning
+- [x] Enemy spawning and being shot at (so I added collision system at this point)
+- [x] Added support for game entities to have custom collision bounding box
+- [x] Enemies spawn in timed waves.
+- [x] Enemies can spawn in formations with varying types of enemies.
+- [x] Added UI and placed score and highscore on screen (also, highscore is stored locally)
+- [x] Added a "cinematic" menu lol
+- [x] Added a game over screen
