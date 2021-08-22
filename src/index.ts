@@ -379,7 +379,7 @@ function showMenu(): void {
 
 	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 	// @ts-ignore
-	const versionNum = new Text(VERSION, new TextStyle({ fill: "white" }));
+	const versionNum = new Text('v' + VERSION, new TextStyle({ fill: "white" }));
 
 	versionNum.updateText(true);
 

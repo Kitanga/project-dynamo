@@ -24,6 +24,7 @@ Dynamo is an endless top-down shmup, with the goal of getting the highest score.
 	* [v0.5.1 (feedback from andrew + other stuff)](#v0.5.1feedbackfromandrewotherstuff)
 	* [v0.6.0 (game feel and pacing fixes)](#v0.6.0gamefeelandpacingfixes)
 	* [v0.7.0 Place highscore on a server](#v0.7.0Placehighscoreonaserver)
+	* [v0.7.1 Extras from v0.6.0](#v0.7.1Extrasfromv0.6.0)
 	* [v0.8.0 (Loading Screen fix up)](#v0.8.0LoadingScreenfixup)
 	* [v0.9.0 (new plane: Meandering plane)](#v0.9.0newplane:Meanderingplane)
 	* [v0.10.0 (audio)](#v0.10.0audio)
@@ -212,22 +213,27 @@ The game looks fine on mobile, with a few exceptions, the formations might have 
 - [x] Blow up shockwave filter
 - [x] Add flash anim for hit enemies
 - [x] Fix responsiveness of video on menu page
-- [ ] Game (Create sound manager for this. Also add blur event for game audio to be muted)
+- [x] Game (Create sound manager for this. Also add blur event for game audio to be muted)
     - [x] Shoot
     - [x] Hit enemy
     - [x] Kill Confirmed
-    - [ ] ~Enemy shoot~ (Too much noise, will have to be implemented a bit differently)
     - [x] Enemy explode
-    - [ ] Player lost life
     - [x] Game over music
 - [x] Water must wiggle
-- [ ] Switch to parcel 2
-- [ ] Add system to load different formations depending on whether we are on mobile or not.
+- [x] Switch to parcel 2
 - [x] Add the version number (place javascript code into the `src/index.html` that creates a VERSION_TAG value and sets it to our package.json file's version. This way we always have the version update to date with the game code.)
 
 ### <a name='v0.7.0Placehighscoreonaserver'></a>v0.7.0 Place highscore on a server
 
 - [ ] Place highscore on a server
+
+### <a name='v0.7.1Extrasfromv0.6.0'></a>v0.7.1 Extras from v0.6.0
+
+- [ ] Game audio
+    - [ ] ~Enemy shoot~ (Too much noise, will have to be implemented a bit differently)
+    - [ ] Player lost life
+- [ ] Add blur event for SoundController
+- [ ] Add system to load different formations depending on whether we are on mobile or not.
 
 ### <a name='v0.8.0LoadingScreenfixup'></a>v0.8.0 (Loading Screen fix up)
 
