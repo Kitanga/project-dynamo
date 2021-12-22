@@ -1,11 +1,12 @@
 {
     "compilerOptions": {
-        "target": "esnext",
-        "module": "CommonJS" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */ ,
-        "strict": true,
+        "target": "ESNext",
+        "module": "CommonJS" /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */,
+        "strict": false,
         "sourceMap": true,
         "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "noImplicitAny": false
     },
-    "include": ["./src/index.ts", "./types/*.d.ts", "./node_modules/pixi.js"]
+    "include": ["./src/index.ts", "./types/*.d.ts", "./node_modules/pixi.js", "./node_modules/@types/**/*"]
 }

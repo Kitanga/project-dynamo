@@ -1,309 +1,334 @@
-import { Texture } from 'pixi.js';
-import KeyController from 'keycon';
-import { Vector2D } from '../../Math';
-import { GAME_HEIGHT, GAME_WIDTH, QuadEntityType } from '../../constants';
-import { Bullet, ObjectPoolHandler, PlayerBullet, PlayerBulletProps } from '../ObjectPoolHandler';
-import Quadtree from '@timohausmann/quadtree-js';
-import { GamepadButtons, GamepadController, SoundController } from '../../Controller';
+import { Texture } from "pixi.js";
+import KeyController from "keycon";
+import { Vector2D } from "../../Math";
+import { GAME_HEIGHT, GAME_WIDTH, QuadEntityType } from "../../constants";
+import { Bullet, ObjectPoolHandler, PlayerBullet, PlayerBulletProps } from "../ObjectPoolHandler";
+import Quadtree from "@timohausmann/quadtree-js";
+import { GamepadButtons, GamepadController, SoundController } from "../../Controller";
 
 export enum PrimaryControls {
-	SHOOT = 'n',
-	LEFT = 'a',
-	RIGHT = 'd',
-	UP = 'w',
-	DOWN = 's',
+    SHOOT = "n",
+    LEFT = "a",
+    RIGHT = "d",
+    UP = "w",
+    DOWN = "s",
 }
 
 export enum alternateControls {
-	SHOOT = 'space',
-	LEFT = 'left',
-	RIGHT = 'right',
-	UP = 'up',
-	DOWN = 'down',
+    SHOOT = "space",
+    LEFT = "left",
+    RIGHT = "right",
+    UP = "up",
+    DOWN = "down",
 }
 
 export enum GamepadControls {
-	SHOOT = 'space',
-	LEFT = 'left',
-	RIGHT = 'right',
-	UP = 'up',
-	DOWN = 'down',
+    SHOOT = "space",
+    LEFT = "left",
+    RIGHT = "right",
+    UP = "up",
+    DOWN = "down",
 }
 
 export class PlayerPlane extends Bullet {
-	protected kb: KeyController;
-	protected gc: GamepadController<PlayerPlane>;
+    protected kb: KeyController;
+    protected gc: GamepadController<PlayerPlane>;
 
-	protected velocity = new Vector2D();
+    protected velocity = new Vector2D();
 
-	protected readonly MAX_VELOCITY_X = 4;
-	protected readonly MAX_VELOCITY_Y = 4;
-	/** Rounds Per Second */
-	protected readonly RPS = 7;
-	protected readonly TIME_BETWEEN_SHOTS: number;
+    protected readonly MAX_VELOCITY_X = 4;
+    protected readonly MAX_VELOCITY_Y = 4;
+    /** Rounds Per Second */
+    protected readonly RPS = 7;
+    protected readonly TIME_BETWEEN_SHOTS: number;
 
-	/** Last timestamp of when player shoot */
-	protected lastShot = 0;
+    /** Last timestamp of when player shoot */
+    protected lastShot = 0;
 
-	public bulletPool: ObjectPoolHandler<PlayerBullet, PlayerBulletProps>;
+    public bulletPool: ObjectPoolHandler<PlayerBullet, PlayerBulletProps>;
 
-	protected controls = {
-		shoot: false,
-		up: false,
-		down: false,
-		left: false,
-		right: false,
-	};
+    protected controls = {
+        shoot: false,
+        up: false,
+        down: false,
+        left: false,
+        right: false,
+    };
 
-	public fuel = 1;
-	public lives = 9;
+    public fuel = 1;
+    public lives = 9;
 
-	public entityType = QuadEntityType.PLAYER;
+    public entityType = QuadEntityType.PLAYER;
 
-	protected readonly FRAME_BEFORE_ALT = 3;
-	protected fireRight = true;
-	protected frameCount: number;
-	protected controlMapping: [(PrimaryControls | alternateControls), string][];
+    protected readonly FRAME_BEFORE_ALT = 3;
+    protected fireRight = true;
+    protected frameCount: number;
+    protected controlMapping: [PrimaryControls | alternateControls, string][];
+    protected movementMultiplier = {
+        x: 1,
+        y: 1,
+    };
 
-	public shootFeedbackDuration = 50;
+    public shootFeedbackDuration = 50;
 
-	constructor() {
-		super(Texture.from('player_plane_1.png'));
+    constructor() {
+        super(Texture.from("player_plane_1.png"));
 
-		this.bulletPool = new ObjectPoolHandler<PlayerBullet, PlayerBulletProps>(20, PlayerBullet, this);
+        this.bulletPool = new ObjectPoolHandler<PlayerBullet, PlayerBulletProps>(20, PlayerBullet, this);
 
-		this.TIME_BETWEEN_SHOTS = 1000 / this.RPS;
-		this.frameCount = this.FRAME_BEFORE_ALT;
+        this.TIME_BETWEEN_SHOTS = 1000 / this.RPS;
+        this.frameCount = this.FRAME_BEFORE_ALT;
 
-		this.active = true;
-		this.visible = true;
+        this.active = true;
+        this.visible = true;
 
-		this._collisionBound.width = this.collisionBoundOffsets.width;
-		this._collisionBound.height = this.collisionBoundOffsets.height;
+        this._collisionBound.width = this.collisionBoundOffsets.width;
+        this._collisionBound.height = this.collisionBoundOffsets.height;
 
-		this.controlMapping = [
-			[PrimaryControls.SHOOT, 'Shoot'],
-			[PrimaryControls.UP, 'Up'],
-			[PrimaryControls.DOWN, 'Down'],
-			[PrimaryControls.LEFT, 'Left'],
-			[PrimaryControls.RIGHT, 'Right'],
-			[alternateControls.SHOOT, 'Shoot'],
-			[alternateControls.UP, 'Up'],
-			[alternateControls.DOWN, 'Down'],
-			[alternateControls.LEFT, 'Left'],
-			[alternateControls.RIGHT, 'Right'],
-		];
+        this.controlMapping = [
+            [PrimaryControls.SHOOT, "Shoot"],
+            [PrimaryControls.UP, "Up"],
+            [PrimaryControls.DOWN, "Down"],
+            [PrimaryControls.LEFT, "Left"],
+            [PrimaryControls.RIGHT, "Right"],
+            [alternateControls.SHOOT, "Shoot"],
+            [alternateControls.UP, "Up"],
+            [alternateControls.DOWN, "Down"],
+            [alternateControls.LEFT, "Left"],
+            [alternateControls.RIGHT, "Right"],
+        ];
 
-		this.gc = new GamepadController<PlayerPlane>(this, [
-			[GamepadButtons.RIGHT_BOTTOM_SHOULDER, 'Shoot'],
-			[GamepadButtons.DPAD_UP, 'Up'],
-			[GamepadButtons.DPAD_DOWN, 'Down'],
-			[GamepadButtons.DPAD_LEFT, 'Left'],
-			[GamepadButtons.DPAD_RIGHT, 'Right'],
-		]);
+        this.gc = new GamepadController<PlayerPlane>(this, [
+            [GamepadButtons.RIGHT_BOTTOM_SHOULDER, "Shoot"],
+            [GamepadButtons.DPAD_UP, "Up"],
+            [GamepadButtons.DPAD_DOWN, "Down"],
+            [GamepadButtons.DPAD_LEFT, "Left"],
+            [GamepadButtons.DPAD_RIGHT, "Right"],
+        ]);
 
-		this.soundController = SoundController.getInstance();
+        this.soundController = SoundController.getInstance();
 
-		this.kb = new KeyController();
-		this.initEvents();
-	}
+        this.kb = new KeyController();
+        this.initEvents();
+    }
 
-	activateShoot(): void {
-		this.controls.shoot = true;
-	}
+    activateShoot(): void {
+        this.controls.shoot = true;
+    }
 
-	activateUp(): void {
-		this.controls.up = true;
-	}
+    activateUp(movementMultiplier = 1): void {
+        this.movementMultiplier.y = movementMultiplier as number;
+        this.controls.up = true;
+    }
 
-	activateDown(): void {
-		this.controls.down = true;
-	}
+    activateDown(movementMultiplier = 1): void {
+        this.movementMultiplier.y = movementMultiplier as number;
+        this.controls.down = true;
+    }
 
-	activateLeft(): void {
-		this.controls.left = true;
-	}
+    activateLeft(movementMultiplier = 1): void {
+        this.movementMultiplier.x = movementMultiplier as number;
+        this.controls.left = true;
+    }
 
-	activateRight(): void {
-		this.controls.right = true;
-	}
+    activateRight(movementMultiplier = 1): void {
+        this.movementMultiplier.x = movementMultiplier as number;
+        this.controls.right = true;
+    }
 
-	deactivateShoot(): void {
-		this.controls.shoot = false;
-	}
+    deactivateShoot(): void {
+        this.controls.shoot = false;
+    }
 
-	deactivateUp(): void {
-		this.controls.up = false;
-	}
+    deactivateUp(): void {
+        this.controls.up = false;
+    }
 
-	deactivateDown(): void {
-		this.controls.down = false;
-	}
+    deactivateDown(): void {
+        this.controls.down = false;
+    }
 
-	deactivateLeft(): void {
-		this.controls.left = false;
-	}
+    deactivateLeft(): void {
+        this.controls.left = false;
+    }
 
-	deactivateRight(): void {
-		this.controls.right = false;
-	}
+    deactivateRight(): void {
+        this.controls.right = false;
+    }
 
-	/**
-	 * Create keyboard bindings here
-	 */
-	protected initEvents(): void {
-		const kb = this.kb;
-		const controls = this.controls;
+    keyboardActive(): void {
+        this.gc.isActive = false;
+    }
 
-		kb.on("blur", () => {
-			controls.shoot = false;
-			controls.up = false;
-			controls.down = false;
-			controls.left = false;
-			controls.right = false;
-		});
+    /**
+     * Create keyboard bindings here
+     */
+    protected initEvents(): void {
+        const kb = this.kb;
+        const controls = this.controls;
 
-		this.controlMapping.forEach(controlMap => {
-			const keyboardKey = controlMap[0];
-			const action = controlMap[1];
+        kb.on("blur", () => {
+            controls.shoot = false;
+            controls.up = false;
+            controls.down = false;
+            controls.left = false;
+            controls.right = false;
+        });
 
-			kb.keydown(keyboardKey, ((this as unknown) as Record<string, () => void>)['activate' + action].bind(this));
-			kb.keyup(keyboardKey, ((this as unknown) as Record<string, () => void>)['deactivate' + action].bind(this));
-		});
+        this.controlMapping.forEach((controlMap) => {
+            const keyboardKey = controlMap[0];
+            const action = controlMap[1];
 
-		// When we destroy the 
-		this.on('destroyed', this.stopKeyboardListening, this);
-	}
+            kb.keydown(keyboardKey, () => {
+                this.keyboardActive();
+                (this as unknown as Record<string, () => void>)["activate" + action]();
+            });
+            kb.keyup(keyboardKey, () => {
+                this.keyboardActive();
+                (this as unknown as Record<string, () => void>)["deactivate" + action]();
+            });
+        });
 
-	protected updateMovement(): void {
-		const { up, down, left, right } = this.controls;
+        // When we destroy the
+        this.on("destroyed", this.stopKeyboardListening, this);
+    }
 
-		if (up) {
-			this.setVelocityY(-this.MAX_VELOCITY_Y);
-		} else if (down) {
-			this.setVelocityY(this.MAX_VELOCITY_Y);
-		} else {
-			this.setVelocityY(0);
-		}
+    protected updateMovement(): void {
+        const { up, down, left, right } = this.controls;
 
-		if (left) {
-			this.setVelocityX(-this.MAX_VELOCITY_X);
-		} else if (right) {
-			this.setVelocityX(this.MAX_VELOCITY_X);
-		} else {
-			this.setVelocityX(0);
-		}
-	}
+        const xSpeed = this.MAX_VELOCITY_X * Math.abs(this.movementMultiplier.x);
+        const ySpeed = this.MAX_VELOCITY_Y * Math.abs(this.movementMultiplier.y);
 
-	/**
-	 * Shoot a bullet
-	 */
-	protected shoot(): void {
-		const now = performance.now();
+        if (up) {
+            this.setVelocityY(-ySpeed);
+        } else if (down) {
+            this.setVelocityY(ySpeed);
+        } else {
+            this.setVelocityY(0);
+        }
 
-		if (now > this.lastShot) {
-			this.lastShot = now + this.TIME_BETWEEN_SHOTS;
+        if (left) {
+            this.setVelocityX(-xSpeed);
+        } else if (right) {
+            this.setVelocityX(xSpeed);
+        } else {
+            this.setVelocityX(0);
+        }
+    }
 
-			const bullet = this.bulletPool.get();
+    /**
+     * Shoot a bullet
+     */
+    protected shoot(): void {
+        const now = performance.now();
 
-			if (bullet) {
-				let x = this.x;
-				const y = this.y;
+        if (now > this.lastShot) {
+            this.lastShot = now + this.TIME_BETWEEN_SHOTS;
 
-				// Alternating fire
-				if (this.fireRight) {
-					x += 3;
-					this.soundController.playPlayerShootRight();
-				} else {
-					x -= 4;
-					this.soundController.playPlayerShootLeft();
-				}
+            const bullet = this.bulletPool.get();
 
-				bullet.position.set(x, y);
+            if (bullet) {
+                let x = this.x;
+                const y = this.y;
 
-				// Shake controller
-				this.gc.vibrateRamped({ weakMagnitude: 0.8, strongMagnitude: 0.7 }, { weakMagnitude: 0.0, strongMagnitude: 0.0 }, this.TIME_BETWEEN_SHOTS * 0.52);
-			}
-		}
-	}
+                // Alternating fire
+                if (this.fireRight) {
+                    x += 3;
+                    this.soundController.playPlayerShootRight();
+                } else {
+                    x -= 4;
+                    this.soundController.playPlayerShootLeft();
+                }
 
-	public stopKeyboardListening(): void {
-		this.kb.destroy();
-	}
+                bullet.position.set(x, y);
 
-	public setVelocityX(x: number): void {
-		this.velocity.x = x;
-	}
-	public setVelocityY(y: number): void {
-		this.velocity.y = y;
-	}
+                // Shake controller
+                this.gc.vibrateRamped(
+                    { weakMagnitude: 0.8, strongMagnitude: 0.7 },
+                    { weakMagnitude: 0.0, strongMagnitude: 0.0 },
+                    this.TIME_BETWEEN_SHOTS * 0.52
+                );
+            }
+        }
+    }
 
-	public update(dt: number): void {
-		this.gc.update();
+    public stopKeyboardListening(): void {
+        this.kb.destroy();
+    }
 
-		if (!--this.frameCount) {
-			this.fireRight = !this.fireRight;
-			this.frameCount = this.FRAME_BEFORE_ALT;
-		}
+    public setVelocityX(x: number): void {
+        this.velocity.x = x;
+    }
+    public setVelocityY(y: number): void {
+        this.velocity.y = y;
+    }
 
-		this.bulletPool.update(dt);
-		const { x: velX, y: velY } = this.velocity;
-		this.updateMovement();
+    public update(dt: number): void {
+        this.gc.update();
 
-		if (this.controls.shoot) {
-			this.shoot();
-		}
+        if (!--this.frameCount) {
+            this.fireRight = !this.fireRight;
+            this.frameCount = this.FRAME_BEFORE_ALT;
+        }
 
-		const halfWidth = (this.width * 0.5);
+        this.bulletPool.update(dt);
+        const { x: velX, y: velY } = this.velocity;
+        this.updateMovement();
 
-		const newX = this.x + (velX * dt);
-		const newY = this.y + (velY * dt);
+        if (this.controls.shoot) {
+            this.shoot();
+        }
 
-		const leftBound = newX - halfWidth;
-		const rightBound = newX + halfWidth;
-		const topBound = newY - (this.height * 0.5);
-		const bottomBound = newY + (this.height * 0.5);
+        const halfWidth = this.width * 0.5;
 
-		if (rightBound < GAME_WIDTH && leftBound > 0) {
-			this.x = newX;
-		}
+        const newX = this.x + velX * dt;
+        const newY = this.y + velY * dt;
 
-		if (bottomBound < GAME_HEIGHT && topBound > 0) {
-			this.y = newY;
-		}
-	}
+        const leftBound = newX - halfWidth;
+        const rightBound = newX + halfWidth;
+        const topBound = newY - this.height * 0.5;
+        const bottomBound = newY + this.height * 0.5;
 
-	public collision(): void {
-		this.emit('game-over');
-	}
+        if (rightBound < GAME_WIDTH && leftBound > 0) {
+            this.x = newX;
+        }
 
-	// protected _collisionBoundOffsets: Quadtree.Rect = {
-	// 	x: 31,
-	// 	y: 22,
-	// 	width: 7,
-	// 	height: 16,
-	// };
-	public collisionBoundOffsets: Quadtree.Rect = {
-		x: 3,
-		y: 13,
-		width: 7,
-		height: 16,
-	};
+        if (bottomBound < GAME_HEIGHT && topBound > 0) {
+            this.y = newY;
+        }
+    }
 
-	protected _collisionBound: Quadtree.Rect = {
-		x: 0,
-		y: 0,
-		width: 0,
-		height: 0,
-	};
+    public collision(): void {
+        this.emit("game-over");
+    }
 
-	get collisionBounds(): Quadtree.Rect {
-		const position = this.position;
-		const _collisionBound = this._collisionBound;
+    // protected _collisionBoundOffsets: Quadtree.Rect = {
+    // 	x: 31,
+    // 	y: 22,
+    // 	width: 7,
+    // 	height: 16,
+    // };
+    public collisionBoundOffsets: Quadtree.Rect = {
+        x: 3,
+        y: 13,
+        width: 7,
+        height: 16,
+    };
 
-		_collisionBound.x = position.x;
-		_collisionBound.y = position.y;
+    protected _collisionBound: Quadtree.Rect = {
+        x: 0,
+        y: 0,
+        width: 0,
+        height: 0,
+    };
 
-		return _collisionBound;
-	}
+    get collisionBounds(): Quadtree.Rect {
+        const position = this.position;
+        const _collisionBound = this._collisionBound;
+
+        _collisionBound.x = position.x;
+        _collisionBound.y = position.y;
+
+        return _collisionBound;
+    }
 }
