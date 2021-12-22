@@ -232,7 +232,7 @@ The game looks fine on mobile, with a few exceptions, the formations might have 
 -   [x] UPDATE: Move the "Click ME to start Game" to after assets load
 -   [ ] UPDATE: Make game over scene background translucent
 -   [ ] UPDATE: Allow user to move past input prompt and menu scene by pressing spacebar or controller buttons
--   [ ] UPDATE: Change "click on THIS..." to an audio prompt instead.
+-   [ ] ~UPDATE: Change "click on THIS..." to an audio prompt instead.~
 -   [ ] NEW: Add a way for controller to pick between the two options (A for yes and B for no)
 -   [ ] NEW: Added firebase analytics to measure session time.
 -   [ ] NEW: Add explosion animations

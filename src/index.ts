@@ -118,7 +118,14 @@ function resetStage(): void {
 
 function showBoot(): void {
     resetStage();
-    const readyText = new Text("Click on THIS text to start game!");
+
+    const audioPrompt = "Click on THIS text to start game!";
+
+    const utterance = new SpeechSynthesisUtterance(audioPrompt);
+    // utterance.voice =
+    speechSynthesis.speak(utterance);
+
+    const readyText = new Text(audioPrompt);
 
     readyText.x = app.renderer.width * 0.5;
     readyText.y = app.renderer.height * 0.5;
