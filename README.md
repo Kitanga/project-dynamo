@@ -28,6 +28,10 @@ Play it [here](https://dynamo-shmup.herokuapp.com/)
 
 - `WASD`/`Arrow Keys` for movement
 - `n`/`Spacebar` for shooting
+- `Gamepad` supported only after pressing play, doesn't work on menu items.
+	- `Arrows`/`Left Analog` for movement
+	- `RT`/`R2` to fire
+	- Highly advise you use a gamepad with rumble/vibration support
 
 ## <a name='Changelog'></a>Change log
 
