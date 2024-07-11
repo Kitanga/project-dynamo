@@ -4,6 +4,7 @@ import { Container, Loader, Sprite, Text, TextStyle, Texture, TilingSprite } fro
 import { ASSETS_LIST, GAME_HEIGHT, GAME_WIDTH } from "./constants";
 import {
     CameraController,
+    GamepadButtons,
     ShockwaveController,
     SoundController,
     Spawner,
@@ -138,6 +139,23 @@ function showBoot(): void {
     readyText.on("pointerup", () => {
         showMenu();
     });
+
+    let selectPressed = false;
+
+    // Please don't judge me :D, this is just a demo
+    const intervalID = setInterval(() => {
+        const gamepad = navigator.getGamepads().find((gamepad) => !!gamepad);
+
+        if (gamepad) {
+            if (gamepad.buttons.some((button) => button.pressed)) {
+                selectPressed = true;
+            } else if (selectPressed) {
+                selectPressed = false;
+                clearInterval(intervalID);
+                readyText.emit("pointerup");
+            }
+        }
+    }, 1000 / 30);
 
     app.stage.addChild(readyText);
 }
@@ -361,26 +379,87 @@ function showMenu(): void {
     // The interactible
     const playButtonStyle = new TextStyle({
         fill: "white",
+        align: "right",
     });
+
+    const instructions = new Text(
+        `Movement: WASD, Arrow keys, DPAD/Left-Stick on Controller
+        Shooting: Spacebar or RT/R2
+        N.B.: Use a controller with rumble
+        N.B.: Don't be too close other planes when they blow up
+        N.B.: Bombers are weaker in the middle`,
+        playButtonStyle
+    );
+
+    instructions.anchor.set(1, 0.5);
+
+    instructions.x = renderer.width - 20;
+    instructions.y = renderer.height * 0.5;
+
+    instructions.visible = false;
+
+    const helpButton = new Text("Help", playButtonStyle);
+    helpButton.anchor.set(0, 0);
     const playButton = new Text("PLAY", playButtonStyle);
     playButton.anchor.set(0, 0);
 
-    playButton.x = titleSprite.x;
-    playButton.y = titleSprite.getBounds().bottom + 10;
+    const PADDING = 10;
+
+    playButton.x = helpButton.x = titleSprite.x;
+    playButton.y = titleSprite.getBounds().bottom + PADDING;
+
+    helpButton.y = playButton.getBounds().bottom + PADDING;
 
     playButton.interactive = true;
     playButton.buttonMode = true;
+    helpButton.interactive = true;
+    helpButton.buttonMode = true;
 
-    playButton.on("pointerup", () => {
+    const onPlayButtonClicked = () => {
         bgVideo.pause();
         bgVideo.currentTime = 0;
         SoundController.getInstance().stopAll();
         SoundController.getInstance().playMouseClick();
         showGame();
+    };
+
+    playButton.on("pointerup", onPlayButtonClicked);
+
+    helpButton.on("pointerup", () => {
+        instructions.visible = !instructions.visible;
     });
+
+    let selectPressed = false;
+
+    // Please don't judge me :D, this is just a demo
+    const intervalID = setInterval(() => {
+        const gamepad = navigator.getGamepads().find((gamepad) => !!gamepad);
+
+        if (gamepad) {
+            if (
+                gamepad.buttons[GamepadButtons.START_FORWARD].pressed ||
+                gamepad.buttons[GamepadButtons.FACE_1].pressed ||
+                gamepad.buttons[GamepadButtons.FACE_2].pressed ||
+                gamepad.buttons[GamepadButtons.FACE_3].pressed ||
+                gamepad.buttons[GamepadButtons.FACE_4].pressed
+            ) {
+                console.log("A, B, X, Y, pressed");
+
+                clearInterval(intervalID);
+            }
+            if (gamepad.buttons[GamepadButtons.SELECT_BACK].pressed && !selectPressed) {
+                selectPressed = true;
+            } else if (!gamepad.buttons[GamepadButtons.SELECT_BACK].pressed && selectPressed) {
+                helpButton.emit("pointerup");
+                selectPressed = false;
+            }
+        }
+    }, 1000 / 30);
 
     app.stage.addChild(titleSprite);
     app.stage.addChild(playButton);
+    app.stage.addChild(instructions);
+    app.stage.addChild(helpButton);
 
     // Add the version number
 
