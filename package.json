@@ -24,7 +24,7 @@
     "author": "Kitanga Nday",
     "dependencies": {
         "@pixi/sound": "^4.0.4",
-        "@timohausmann/quadtree-js": "^1.2.4",
+        "@timohausmann/quadtree-js": "^1.2.6",
         "alea": "^1.0.0",
         "core-js": "^3.12.1",
         "eventemitter3": "^4.0.7",
