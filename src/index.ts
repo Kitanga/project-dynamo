@@ -137,6 +137,7 @@ function showBoot(): void {
     readyText.anchor.set(0.5);
 
     readyText.on("pointerup", () => {
+        clearInterval(intervalID);
         showMenu();
     });
 
@@ -317,10 +318,34 @@ function showGameOver(score: number): void {
 
     playAgainButton.on("pointerup", () => {
         SoundController.getInstance().stopAll();
+        clearInterval(intervalID);
         showGame();
     });
 
     gameOverContainer.addChild(playAgainButton);
+
+    let selectPressed = false;
+
+    // Please don't judge me :D, this is just a demo
+    const intervalID = setInterval(() => {
+        const gamepad = navigator.getGamepads().find((gamepad) => !!gamepad);
+
+        if (gamepad) {
+            if (
+                gamepad.buttons[GamepadButtons.START_FORWARD].pressed ||
+                gamepad.buttons[GamepadButtons.FACE_1].pressed ||
+                gamepad.buttons[GamepadButtons.FACE_2].pressed ||
+                gamepad.buttons[GamepadButtons.FACE_3].pressed ||
+                gamepad.buttons[GamepadButtons.FACE_4].pressed
+            ) {
+                selectPressed = true;
+            } else if (selectPressed) {
+                selectPressed = false;
+                clearInterval(intervalID);
+                playAgainButton.emit("pointerup");
+            }
+        }
+    }, 1000 / 30);
 }
 
 function showMenu(): void {
@@ -420,6 +445,7 @@ function showMenu(): void {
         bgVideo.currentTime = 0;
         SoundController.getInstance().stopAll();
         SoundController.getInstance().playMouseClick();
+        clearInterval(intervalID);
         showGame();
     };
 
