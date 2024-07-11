@@ -89,7 +89,7 @@ export class GamepadController<PlayerType> {
     }
 
     public update(): void {
-        this.activeGamepad = navigator.getGamepads()[0] as IChromeGamepad;
+        this.activeGamepad = navigator.getGamepads().find((gamepad) => !!gamepad) as IChromeGamepad;
         if (this.activeGamepad) {
             const player = this.player as unknown as PlayerPlane;
 
@@ -145,7 +145,8 @@ export class GamepadController<PlayerType> {
 
     public static buttonPressed(): boolean {
         let buttonPressed = false;
-        const gamepad = navigator.getGamepads()[0] as IChromeGamepad;
+
+        const gamepad = navigator.getGamepads().find((gamepad) => !!gamepad) as IChromeGamepad;
 
         if (gamepad) {
             const buttons = gamepad.buttons;
