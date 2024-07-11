@@ -411,7 +411,7 @@ function showMenu(): void {
         `Movement: WASD, Arrow keys, DPAD/Left-Stick on Controller
         Shooting: Spacebar or RT/R2
         N.B.: Use a controller with rumble
-        N.B.: Don't be too close other planes when they blow up
+        N.B.: Don't be too close to other planes when they blow up
         N.B.: Bombers are weaker in the middle`,
         playButtonStyle
     );
