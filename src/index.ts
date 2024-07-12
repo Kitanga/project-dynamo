@@ -120,13 +120,17 @@ function resetStage(): void {
 function showBoot(): void {
     resetStage();
 
-    const audioPrompt = "Click on THIS text to start game!";
+    const audioPrompt = `Click on THIS text
+    or tap any button on your gamepad
+    to start game!`;
 
     const utterance = new SpeechSynthesisUtterance(audioPrompt);
     // utterance.voice =
     speechSynthesis.speak(utterance);
 
-    const readyText = new Text(audioPrompt);
+    const readyText = new Text(audioPrompt, {
+        align: "center",
+    });
 
     readyText.x = app.renderer.width * 0.5;
     readyText.y = app.renderer.height * 0.5;
