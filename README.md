@@ -6,7 +6,7 @@ N.B.: If you clone this repo you'll need to either use `Node v14.x` or prepare y
 
 <!-- vscode-markdown-toc -->
 
--   [Demo](#Demo)
+-   [Demo](https://kitanga.github.io/project-dynamo/dist/index.html)
 -   [Design spec](#Designspec)
 -   [Controls](#Controls)
 -   [Change log](#Changelog)
@@ -19,7 +19,7 @@ N.B.: If you clone this repo you'll need to either use `Node v14.x` or prepare y
 	/vscode-markdown-toc-config -->
 <!-- /vscode-markdown-toc -->
 
-## <a name='Demo'></a>Demo
+## <a name='Demo' href="https://kitanga.github.io/project-dynamo/dist/index.html">Play Demo here</a>
 
 Play it [here](https://project-dynamo.onrender.com/)
 
