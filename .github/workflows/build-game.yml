@@ -1,0 +1,21 @@
+# See https://fly.io/docs/app-guides/continuous-deployment-with-github-actions/
+
+name: Build Game
+on:
+    push:
+        branches:
+            - main
+jobs:
+    build:
+        name: Build Game into dist folder
+        runs-on: ubuntu-latest
+        concurrency: build-game-group # optional: ensure only one action runs at a time
+        strategy:
+            matrix:
+                node-version: [14.x]
+        steps:
+            - uses: actions/checkout@v4
+            - uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+            - run: npm run build
