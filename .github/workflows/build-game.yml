@@ -18,4 +18,4 @@ jobs:
             - uses: actions/setup-node@v1
               with:
                   node-version: ${{ matrix.node-version }}
-            - run: npm ci && npm run build
+            - run: npx del-cli dist --force && node --max_old_space_size=4096 ./node_modules/webpack/bin/webpack.js --env.NODE_ENV=production --progress --config webpack.production.js
