@@ -18,4 +18,10 @@ jobs:
             - uses: actions/setup-node@v1
               with:
                   node-version: ${{ matrix.node-version }}
-            - run: npx del-cli dist --force && node --max_old_space_size=4096 ./node_modules/webpack/bin/webpack.js --env.NODE_ENV=production --progress --config webpack.production.js
+            - name: Install Dependencies
+              run: npm install
+            - name: Delete old /dist folder
+              run: npx del-cli dist --force
+            - name: Start Building folder
+              run: node --max_old_space_size=4096 ./node_modules/webpack/bin/webpack.js --env.NODE_ENV=production --progress --config webpack.production.js
+              working-directory: ${{ github.workspace }}
