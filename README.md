@@ -21,7 +21,7 @@ N.B.: If you clone this repo you'll need to either use `Node v14.x` or prepare y
 
 ## <a name='Demo' href="https://kitanga.github.io/project-dynamo/dist/index.html">Play Demo here</a>
 
-Play it [here](https://project-dynamo.onrender.com/)
+Play it [here](https://kitanga.github.io/project-dynamo/dist/index.html)
 
 ## <a name='Designspec'></a>Design spec
 
