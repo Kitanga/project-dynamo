@@ -29,7 +29,7 @@
         "core-js": "^3.12.1",
         "eventemitter3": "^4.0.7",
         "express": "^4.17.1",
-        "howler": "^2.2.3",
+        "howler": "^2.2.4",
         "intersects": "^2.7.2",
         "joypad.js": "^2.2.5",
         "keycon": "^1.1.2",
