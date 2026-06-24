@@ -33,7 +33,7 @@
         "intersects": "^2.7.2",
         "joypad.js": "^2.2.5",
         "keycon": "^1.1.2",
-        "pixi-filters": "^4.1.4",
+        "pixi-filters": "^5.3.0",
         "pixi-game-camera": "^1.0.2",
         "pixi-tween": "^0.2.0",
         "pixi.js": "^6.0.2"
